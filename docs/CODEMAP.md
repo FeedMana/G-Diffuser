@@ -149,6 +149,11 @@ numbers drift, so search by name.
   on the right under the race timer (FONT_SET_2 label at 230,64; right-anchored in widescreen).
   `gGdxSpeedLapNewRecordTimer` controls the flashing.
 
+- NO BOOST: confirming SPEED LAP opens a BOOST / NO BOOST submenu (`sGdxBoostMenu` in
+  `main_menu.c`, drawn in place of the difficulty rows). `gGdxSpeedLapNoBoost` / `Gdx_SpeedLapNoBoost()`
+  (`common.c`) keep `RACER_STATE_CAN_BOOST` off, so the energy meter stays red. Its record and machine
+  files get an `_nb` suffix (`speedlap_<course>_nb.gdg`, `..._nb_m<key>.gdg`).
+
 ## Port: N64 address translation (`port/n64_gfx_bridge.cpp`)
 
 - Game data still contains 32-bit N64-style pointers. Truncated low-32 values are matched

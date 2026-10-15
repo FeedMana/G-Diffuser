@@ -969,9 +969,17 @@ static int gdx_speed_lap_ghost_path(int32_t encodedCourseIndex, int64_t machineK
         }
 #endif
     }
-    suffix[0] = '\0';
-    if (machineKey >= 0) {
-        snprintf(suffix, sizeof(suffix), "_m%08X", (uint32_t) machineKey);
+    {
+        /* NO BOOST Speed Lap keeps its own records and ghosts. These files are only used by Speed
+         * Lap, where the main menu has just set the flag (decomp common.c). */
+        extern int32_t gGdxSpeedLapNoBoost;
+        const char* modeSuffix = (gGdxSpeedLapNoBoost != 0) ? "_nb" : "";
+
+        if (machineKey >= 0) {
+            snprintf(suffix, sizeof(suffix), "%s_m%08X", modeSuffix, (uint32_t) machineKey);
+        } else {
+            snprintf(suffix, sizeof(suffix), "%s", modeSuffix);
+        }
     }
 #ifdef _WIN32
     n = snprintf(outPath, outCap, "%s\\speedlap_%08X%s.gdg", directory, (uint32_t) encodedCourseIndex, suffix);
